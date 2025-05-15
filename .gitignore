@@ -1,0 +1,8 @@
+*
+!.gitignore
+!frontend/
+!backend/
+!backend/src
+!backend/src/**
+!backend/package.json
+!backend/package-lock.json

@@ -1,0 +1,13 @@
+{
+  "name": "rekrutacja-akai-app-backend",
+  "version": "0.0.0",
+  "description": "Web application allowing for automatic recruitment of new members of AKAI scientific circle",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "author": "AKAI",
+  "dependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
