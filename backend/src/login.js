@@ -1,8 +1,8 @@
 const mysql = require('mysql');
+const bcrypt = require('bcrypt');
 
-
-let mail = 'kamil_suwiczak';
-let password = 'Ka1mil';
+let mail = 'marcin_kaczor';
+let password = 'Marcin123';
 
 module.exports = function (app) {
     const conn = mysql.createConnection({
@@ -12,6 +12,7 @@ module.exports = function (app) {
     database: 'uzytkownicy'
     });
 
+    // Connect to the database
     conn.connect(function (err) {
     if(err){
         throw err;
@@ -19,21 +20,45 @@ module.exports = function (app) {
     console.log(`Connected to the database ${conn.config.database}`);
     });
 
-    const sql = `SELECT * FROM uzytkownicy WHERE email like \'${mail}\' AND haslo like \'${password}\'`;
-    
-    conn.query(sql, function (err, result) {
+    // Checking if user exists
+    conn.query(`SELECT * FROM uzytkownicy WHERE email like \'${mail}\'`, function (err, result) {
         if (err) {
             console.error('Error executing query:', err);
             return;
         }
         if (result.length > 0) {
-            console.log('User found:', result[0]);
-            app.route('/login')
-                .get(function (req, res) {
-            res.send('Login page');
-                });
+            // Checking if password is exists
+            conn.query(`SELECT haslo FROM uzytkownicy WHERE email like \'${mail}\'`, function (err, result) {
+                if (err) {
+                    console.error('Error executing query:', err);
+                    return;
+                }
+                if (result.length > 0) {
+                    let hashedPassword = result[0].haslo;
+                    // Compare the password with the hashed password
+                    bcrypt.compare(password, hashedPassword, function(err, result) {
+                        if (err) {
+                            console.error('Error comparing passwords:', err);
+                            return;
+                        }
+                        if (result) {
+                            console.log('Haslo poprawne');
+                            // Endpoint for login
+                            app.route('/login')
+                                .get(function (req, res) {
+                            res.send('Login page');
+                            });
+                        } else {
+                            console.log('Haslo niepoprawne');
+                            return;
+                        }
+                    });
+                } 
+            });
+
+            
         } else {
-            console.log('Wrong email or password.');
+            console.log('Podany uzytkownik nie istnieje');
             return;
         }
     });
