@@ -21,14 +21,14 @@ module.exports = function (app) {
     });
 
     // Checking if user exists
-    conn.query(`SELECT * FROM users WHERE email like \'${mail}\'`, function (err, result) {
+    conn.query(`SELECT * FROM users WHERE email like ?`, [mail],function (err, result) {
         if (err) {
             console.error('Error executing query:', err);
             return;
         }
         if (result.length > 0) {
             // Checking if password is exists
-            conn.query(`SELECT password_hash FROM users WHERE email like \'${mail}\'`, function (err, result) {
+            conn.query(`SELECT password_hash FROM users WHERE email like ?`, [mail],function (err, result) {
                 if (err) {
                     console.error('Error executing query:', err);
                     return;
