@@ -1,15 +1,22 @@
 const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const DB_HOSTNAME = process.env.DB_HOSTNAME;
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_ROOT_PASSWORD = process.env.DB_ROOT_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 let mail = 'marcin_kaczor';
 let password = 'Marcin123';
 
 module.exports = function (app) {
     const conn = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'rootpass',
-        database: 'akai-recruitment-app'
+        host: DB_HOSTNAME,
+        user: DB_USERNAME,
+        password: DB_ROOT_PASSWORD,
+        database: DB_NAME
     });
 
     // Connect to the database
