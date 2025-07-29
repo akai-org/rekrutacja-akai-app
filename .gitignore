@@ -1,12 +1,2 @@
-*
-!.gitignore
-
-!frontend/
-
-!backend/
-!backend/src
-!backend/src/**
-!backend/package.json
-!backend/package-lock.json
-!backend/database
-!backend/database/**
+node_modules
+*.env

@@ -1,35 +1,6 @@
-const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
-dotenv.config();
+import bcrypt from 'bcrypt';
 
-const DB_HOSTNAME = process.env.DB_HOSTNAME;
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_ROOT_PASSWORD = process.env.DB_ROOT_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
-
-function createDBConnection() {
-    const conn = mysql.createConnection({
-        host: DB_HOSTNAME,
-        user: DB_USERNAME,
-        password: DB_ROOT_PASSWORD,
-        database: DB_NAME
-    });
-    connectToDB(conn);
-
-    return conn;
-}
-
-function connectToDB(conn) {
-    conn.connect(function (err) {
-        if (err) {
-            throw err;
-        }
-        console.log(`Connected to the database ${conn.config.database}`);
-    });
-}
-
-function checkUserCredentials(conn, mail, password) {
+export function checkUserCredentials(conn, mail, password) {
     // Checking if user exists
     conn.query(`SELECT * FROM users WHERE email like ?`, [mail],function (err, result) {
         if (err) {
@@ -68,9 +39,3 @@ function checkUserCredentials(conn, mail, password) {
         }
     });
 }
-
-
-module.exports = {
-    createDBConnection,
-    checkUserCredentials
-};
