@@ -3,15 +3,16 @@
   "version": "0.0.0",
   "description": "Web application allowing for automatic recruitment of new members of AKAI scientific circle",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/server.js"
   },
   "author": "AKAI",
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.14.1",
+    "mongoose": "^8.17.0",
     "nodemon": "^3.1.10"
   }
 }
