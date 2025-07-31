@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 
-export function checkUserCredentials(conn, mail, password) {
+export function checkUserCredentials(mail, password) {
     // Checking if user exists
     conn.query(`SELECT * FROM users WHERE email like ?`, [mail],function (err, result) {
         if (err) {

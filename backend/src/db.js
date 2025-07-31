@@ -1,25 +1,17 @@
-import mysql from 'mysql2';
-import dotenv from 'dotenv';
-dotenv.config();
+import mongoose from 'mongoose';
 
-const DB_HOSTNAME = process.env.DB_HOSTNAME;
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_ROOT_PASSWORD = process.env.DB_ROOT_PASSWORD;
-const DB_NAME = process.env.DB_NAME;
-
-export function createDBConnection() {
-    const conn = mysql.createConnection({
-        host: DB_HOSTNAME,
-        user: DB_USERNAME,
-        password: DB_ROOT_PASSWORD,
-        database: DB_NAME
-    });
-    conn.connect(function (err) {
-        if (err) {
-            console.log(err);
-            throw err;
-        }
-        console.log(`Connected to the database ${conn.config.database}`);
-    });
-    return conn;
+export async function createDBConnection() {
+    const DB_HOSTNAME = process.env.DB_HOSTNAME;
+    const DB_USERNAME = process.env.DB_USERNAME;
+    const DB_PASSWORD = process.env.DB_PASSWORD;
+    const DB_PORT = process.env.DB_PORT;
+    const DB_NAME = process.env.DB_NAME;
+    try {
+        const connectionString = `mongodb://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOSTNAME}:${DB_PORT}/${DB_NAME}`;
+        await mongoose.connect(connectionString)
+        console.log(`connected to database`);
+    } catch(err) {
+        console.log('error connecting to database: ', err);
+        throw err;
+    }
 }
