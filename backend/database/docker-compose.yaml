@@ -1,5 +1,5 @@
 services:
-  mysql:
+  mongo:
     image: mongo:8
     container_name: akai-recruitment-app
     restart: always
@@ -11,7 +11,7 @@ services:
       - "27017:27017"
     volumes:
       - ./init:/docker-entrypoint-initdb.d
-      - akai-recruitment-app-data:/var/lib/mysql
+      - akai-recruitment-app-data:/data/db
 
 volumes:
   akai-recruitment-app-data:

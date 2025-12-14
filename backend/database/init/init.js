@@ -7,6 +7,8 @@ db.createUser({
 });
 
 db.users.insertOne({
+    name: 'Marcin',
+    surname: 'Kaczor',
     email: 'marcin_kaczor@mail.com',
     password_hash: '$2y$10$jR1KvfGE3rj4PiyjVMq8MuO8QbMSjls7iDTw24liEADvYnAIDl3W6'
 });
